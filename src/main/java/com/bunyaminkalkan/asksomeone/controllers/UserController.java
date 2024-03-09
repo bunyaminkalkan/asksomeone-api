@@ -1,12 +1,10 @@
 package com.bunyaminkalkan.asksomeone.controllers;
 
 import com.bunyaminkalkan.asksomeone.entities.User;
-import com.bunyaminkalkan.asksomeone.repos.UserRepository;
 import com.bunyaminkalkan.asksomeone.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -20,7 +18,7 @@ public class UserController {
 
     @GetMapping
     public List<User> getAllUsers(){
-        return userService.getAlluser();
+        return userService.getAllUser();
     }
 
     @PostMapping
@@ -30,7 +28,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public User getOneUser(@PathVariable Long userId){
-        return userService.getOneUser((userId));
+        return userService.getOneUserById((userId));
     }
 
     @PutMapping("/{userId}")
@@ -40,6 +38,6 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     public void deleteOneUser(@PathVariable Long userId){
-        userService.deleteById(userId);
+        userService.deleteOneUserById(userId);
     }
 }

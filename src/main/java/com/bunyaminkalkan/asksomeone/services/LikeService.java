@@ -35,7 +35,7 @@ public class LikeService {
 
 
     public Like createOneLike(LikeCreateRequest newLikeCreateRequest) {
-        User user = userService.getOneUser(newLikeCreateRequest.getUserId());
+        User user = userService.getOneUserById(newLikeCreateRequest.getUserId());
         Post post = postService.getOnePostById(newLikeCreateRequest.getPostId());
         if (user == null || post == null)
             return null;

@@ -25,27 +25,29 @@ public class CommentService {
     }
 
     public List<Comment> getAllComments(Optional<Long> postId, Optional<Long> userId) {
-        if(userId.isPresent()){
+        if(userId.isPresent() && postId.isPresent()){
+            return commentRepository.findByUserIdAndPostId(userId.get(), postId.get());
+        } else if(userId.isPresent()){
             return commentRepository.findByUserId(userId.get());
-        }
-        if(postId.isPresent()){
+        } else if(postId.isPresent()){
             return commentRepository.findByPostId(postId.get());
-        }
-        return commentRepository.findAll();
+        } else
+            return commentRepository.findAll();
     }
 
     public Comment createOneComment(CommentCreateRequest newCommentCreateRequest) {
-        User user = userService.getOneUser(newCommentCreateRequest.getUserId());
+        User user = userService.getOneUserById(newCommentCreateRequest.getUserId());
         Post post = postService.getOnePostById(newCommentCreateRequest.getPostId());
-        if (user == null || post == null)
-            return null;
-        Comment toSave = new Comment();
-        toSave.setId(newCommentCreateRequest.getId());
-        toSave.setText(newCommentCreateRequest.getText());
-        toSave.setPost(post);
-        toSave.setUser(user);
+        if (user != null && post != null) {
+            Comment toSave = new Comment();
+            toSave.setId(newCommentCreateRequest.getId());
+            toSave.setText(newCommentCreateRequest.getText());
+            toSave.setPost(post);
+            toSave.setUser(user);
 
-        return commentRepository.save(toSave);
+            return commentRepository.save(toSave);
+        }
+        return null;
     }
 
     public Comment getOneCommentById(Long commentId) {
