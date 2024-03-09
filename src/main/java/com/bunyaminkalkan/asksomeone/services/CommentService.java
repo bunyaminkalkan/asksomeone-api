@@ -34,7 +34,7 @@ public class CommentService {
         return commentRepository.findAll();
     }
 
-    public Comment createOnePost(CommentCreateRequest newCommentCreateRequest) {
+    public Comment createOneComment(CommentCreateRequest newCommentCreateRequest) {
         User user = userService.getOneUser(newCommentCreateRequest.getUserId());
         Post post = postService.getOnePostById(newCommentCreateRequest.getPostId());
         if (user == null || post == null)
