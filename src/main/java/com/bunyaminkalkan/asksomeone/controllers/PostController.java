@@ -3,6 +3,7 @@ package com.bunyaminkalkan.asksomeone.controllers;
 import com.bunyaminkalkan.asksomeone.entities.Post;
 import com.bunyaminkalkan.asksomeone.requests.PostCreateRequest;
 import com.bunyaminkalkan.asksomeone.requests.PostUpdateRequest;
+import com.bunyaminkalkan.asksomeone.responses.PostResponse;
 import com.bunyaminkalkan.asksomeone.services.PostService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> getAllPosts(@RequestParam Optional<Long> userId){
+    public List<PostResponse> getAllPosts(@RequestParam Optional<Long> userId){
         return postService.getAllPosts(userId);
     }
 

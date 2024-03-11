@@ -1,20 +1,27 @@
 package com.bunyaminkalkan.asksomeone.services;
 
+import com.bunyaminkalkan.asksomeone.entities.Like;
 import com.bunyaminkalkan.asksomeone.entities.Post;
 import com.bunyaminkalkan.asksomeone.entities.User;
 import com.bunyaminkalkan.asksomeone.repos.PostRepository;
 import com.bunyaminkalkan.asksomeone.requests.PostCreateRequest;
 import com.bunyaminkalkan.asksomeone.requests.PostUpdateRequest;
+import com.bunyaminkalkan.asksomeone.responses.LikeResponse;
+import com.bunyaminkalkan.asksomeone.responses.PostResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
 
     private PostRepository postRepository;
     private UserService userService;
+    @Autowired
+    private LikeService likeService;
 
     public PostService(PostRepository postRepository, UserService userService) {
         this.postRepository = postRepository;
@@ -22,11 +29,18 @@ public class PostService {
     }
 
 
-    public List<Post> getAllPosts(Optional<Long> userId) {
+    public List<PostResponse> getAllPosts(Optional<Long> userId) {
+        List<Post> list;
         if(userId.isPresent()){
-            return postRepository.findByUserId(userId.get());
+            list = postRepository.findByUserId(userId.get());
+        }else{
+            list = postRepository.findAll();
         }
-        return postRepository.findAll();
+        return list.stream().map(post -> {
+            List<LikeResponse> likes = likeService.getAllLikes(Optional.of(post.getId()), Optional.empty());
+            return new PostResponse(post, likes);
+        }).collect(Collectors.toList());
+
     }
 
     public Post getOnePostById(Long postId) {
