@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "asksomeone.app.secret",
+      "type": "java.lang.String",
+      "description": "Description for asksomeone.app.secret."
+  }
+] }

@@ -3,7 +3,7 @@ package com.bunyaminkalkan.asksomeone;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.bunyaminkalkan.asksomeone")
 public class AsksomeoneApplication {
 
 	public static void main(String[] args) {
