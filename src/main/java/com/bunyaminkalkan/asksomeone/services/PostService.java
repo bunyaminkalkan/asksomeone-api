@@ -11,6 +11,7 @@ import com.bunyaminkalkan.asksomeone.responses.PostResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,7 +57,7 @@ public class PostService {
         toSave.setText(newPostCreateRequest.getText());
         toSave.setTitle(newPostCreateRequest.getTitle());
         toSave.setUser(user);
-
+        toSave.setCreateDate(new Date());
         return postRepository.save(toSave);
     }
 
@@ -74,5 +75,11 @@ public class PostService {
 
     public void deleteOnePostById(Long postId) {
         postRepository.deleteById(postId);
+    }
+
+    public PostResponse getOnePostByIdWithLikes(Long postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        List<LikeResponse> likes = likeService.getAllLikes(Optional.of(postId), Optional.empty());
+        return new PostResponse(post, likes);
     }
 }

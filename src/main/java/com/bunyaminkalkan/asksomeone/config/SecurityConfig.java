@@ -80,7 +80,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/comments").permitAll()
 
 //                        .requestMatchers("/admin/**").hasAnyAuthority("admin")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll() // for test
                 );
 
 
