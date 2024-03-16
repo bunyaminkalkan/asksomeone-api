@@ -5,6 +5,7 @@ import com.bunyaminkalkan.asksomeone.security.JwtAuthenticationFilter;
 import com.bunyaminkalkan.asksomeone.services.UserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -75,8 +76,11 @@ public class SecurityConfig {
                 .sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers("/auth/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.GET, "/posts").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/comments").permitAll()
+
 //                        .requestMatchers("/admin/**").hasAnyAuthority("admin")
+                        .anyRequest().authenticated()
                 );
 
 
