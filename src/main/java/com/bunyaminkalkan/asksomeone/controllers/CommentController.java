@@ -3,6 +3,7 @@ package com.bunyaminkalkan.asksomeone.controllers;
 import com.bunyaminkalkan.asksomeone.entities.Comment;
 import com.bunyaminkalkan.asksomeone.requests.CommentCreateRequest;
 import com.bunyaminkalkan.asksomeone.requests.CommentUpdateRequest;
+import com.bunyaminkalkan.asksomeone.responses.CommentResponse;
 import com.bunyaminkalkan.asksomeone.services.CommentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class CommentController {
     }
 
     @GetMapping
-    public List<Comment> getAllComments(@RequestParam Optional<Long> postId, @RequestParam Optional<Long> userId){
+    public List<CommentResponse> getAllComments(@RequestParam Optional<Long> postId, @RequestParam Optional<Long> userId){
         return commentService.getAllComments(postId, userId);
     }
 
